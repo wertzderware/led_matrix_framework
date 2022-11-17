@@ -1,7 +1,7 @@
 from time import sleep
 from rpi_ws281x import PixelStrip, Color
 
-colors = [
+colors = [ 
     Color(255, 0, 0), # red
     Color(255, 10, 0), 
     Color(255, 25, 0), 

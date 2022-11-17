@@ -1,9 +1,9 @@
 import matrix
 from rpi_ws281x import Color
 
-matrix = matrix.Matrix(13, 23)
+matrix = matrix.Matrix(13, 23, 20)
 # matrix.test_colors()
-matrix.clear()
+matrix.clear(True) 
 
 
 heart = [
@@ -16,7 +16,6 @@ heart = [
     '00010001000',
     '00001010000',
     '00000100000'
-
 ]
 
 heart_2 = [
@@ -29,12 +28,13 @@ heart_2 = [
     '00011111000',
     '00001110000',
     '00000100000'
-
 ]
+
 # matrix.draw_shape(heart_2, (1, 10), Color(255, 0, 0), True)
 # matrix.draw_shape(heart, (1, 10), Color(255, 255, 255))
 # matrix.pixels.show()
 
-matrix.scroll_shape([heart, heart_2, heart], [Color(255, 0, 0), Color(255, 255, 255), Color(255, 255, 0)])
+# matrix.scroll_shape([heart, heart_2, heart], [Color(255, 0, 0), Color(255, 255, 255), Color(255, 255, 0)])
+# matrix.scroll_shape([heart_2], [Color(255, 0, 0)])
 
 input()
