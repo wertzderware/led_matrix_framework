@@ -114,12 +114,19 @@ class Matrix():
         if update:
             self.pixels.show()
      
-    def draw_pixel(self, location, color):
-        self.pixels.setPixelColor(self.pixel_indeces[location[0]][location[1]], color)
-
+    # def draw_pixel(self, pos, color):
+    #     self.pixels.setPixelColor(self.pixel_indeces[pos[0]][pos[1]], color)
+    
+    def draw_pixel(self, pos_new, color_new, pos_old=False, color_old=Color(0, 0, 0)):
+        if pos_old:
+            self.pixels.setPixelColor(self.pixel_indeces[pos_old[0]][pos_old[1]], color_old)
+        else:
+            self.pixels.setPixelColor(self.pixel_indeces[pos_new[0]][pos_new[1]], color_new)
+            
     def draw_rectangle(self, p1, p2, color):
         self.draw_line(p1, (p1[0], p2[1]), color)
         self.draw_line(p1, (p2[0], p1[1]), color)
         self.draw_line(p2, (p1[0], p2[1]), color)
         self.draw_line(p2, (p2[0], p1[1]), color)
+
 

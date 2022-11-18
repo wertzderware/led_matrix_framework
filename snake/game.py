@@ -1,16 +1,40 @@
 from snake import Snake
 from canvas import Canvas
+from time import sleep
+
+# upgrades/foo should be pulsating in rainbpow
 
 
-canvas = Canvas()
-snake = Snake()
-canvas.ad_object(snake)
-running = True
+class Game():
 
-canvas.ad_object(snake)
+    def __init__(self):
 
-def start():
-    while running:
-        canvas.update()
+        self.canvas = Canvas()
+        self.speed = 0.01
+        self.running = True
+        self.time = 0
 
-start()
+        self.objects = [Snake(self.speed)]
+
+        for o in self.objects:
+            self.canvas.ad_object(o)
+
+        self.canvas.update()
+
+#========================= MAIN LOOP ========================
+    def start(self):
+        while self.running:
+            self.update()
+            self.canvas.update()
+            sleep(self.speed)
+            self.time += self.speed
+
+
+
+    def update(self):
+        for o in self.objects:
+            o.update()
+
+
+game = Game()
+game.start()

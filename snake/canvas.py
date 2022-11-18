@@ -11,8 +11,10 @@ class Canvas():
         self.objects = []
 
     def update(self):
+        self.matrix.clear()
         for o in self.objects:
             o.draw()
+        self.matrix.pixels.show()
 
     def ad_object(self, obj):
         self.objects.append(obj)
