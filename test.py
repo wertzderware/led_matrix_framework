@@ -3,7 +3,6 @@ from rpi_ws281x import Color
 
 matrix = matrix.Matrix(13, 23, 20)
 # matrix.test_colors()
-matrix.clear(True) 
 
 
 heart = [
@@ -30,11 +29,15 @@ heart_2 = [
     '00000100000'
 ]
 
+# matrix.test()
+matrix.test_colors()
+
 # matrix.draw_shape(heart_2, (1, 10), Color(255, 0, 0), True)
 # matrix.draw_shape(heart, (1, 10), Color(255, 255, 255))
 # matrix.pixels.show()
 
 # matrix.scroll_shape([heart, heart_2, heart], [Color(255, 0, 0), Color(255, 255, 255), Color(255, 255, 0)])
-# matrix.scroll_shape([heart_2], [Color(255, 0, 0)])
+# matrix.scroll_shape([heart_2], [Color(0, 0, 255)])
+matrix.clear(True) 
 
 input()

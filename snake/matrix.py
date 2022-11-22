@@ -1,3 +1,4 @@
+import random
 from time import sleep
 from rpi_ws281x import PixelStrip, Color
 
@@ -50,7 +51,6 @@ class Matrix():
         while True:
             self.clear()
             for shape_index, shape in enumerate(shapes):
-                # y = 9 + 0 -10*0
                 y = (frame ) - (distance * shape_index)
                 if y + len(shape) > self.height:
                     self.draw_shape(shape, (1, y), colors[shape_index], True)
@@ -85,13 +85,13 @@ class Matrix():
             self.pixels.show()
             shift += 1
             sleep(0.001)
-            # input()
 
     def test(self):
         for x in range(self.width):
             for y in range(self.height):
                 print('(X/Y) -> (', x, '/', y, ') -> ', self.pixel_indeces[x][y])
                 self.pixels.setPixelColor(self.pixel_indeces[x][y], (255, 255, 255))
+                self.pixels.show()
                 sleep(0.1)
 
     def draw_line(self, p1, p2, color):
@@ -114,9 +114,6 @@ class Matrix():
         if update:
             self.pixels.show()
      
-    # def draw_pixel(self, pos, color):
-    #     self.pixels.setPixelColor(self.pixel_indeces[pos[0]][pos[1]], color)
-    
     def draw_pixel(self, pos_new, color_new, pos_old=False, color_old=Color(0, 0, 0)):
         if pos_old:
             self.pixels.setPixelColor(self.pixel_indeces[pos_old[0]][pos_old[1]], color_old)
@@ -128,5 +125,8 @@ class Matrix():
         self.draw_line(p1, (p2[0], p1[1]), color)
         self.draw_line(p2, (p1[0], p2[1]), color)
         self.draw_line(p2, (p2[0], p1[1]), color)
+
+    def random_point(self):
+        return (random.randint(0, self.width), random.randint(0, self.height))
 
 

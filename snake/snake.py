@@ -2,14 +2,13 @@ import matrix
 from rpi_ws281x import Color
 
 class Snake():
-    def __init__(self, time_speed):
+    def __init__(self, time):
         self.position = (7, 7)
         self.color = (Color(255, 255, 0))
         self.segments = [(7, 6), (7, 5)]
         self.speed = 0.3
         self.vel = (0, 1)
-        self.time_speed = time_speed
-        self.time = 0
+        self.time = time
 
     def add_matrix(self, matrix):
         self.matrix = matrix
@@ -19,24 +18,40 @@ class Snake():
 
     def update(self):
         p = self.position
-        new_p = (
-            p[0] + self.time * self.speed * self.vel[0], 
-            p[1] + self.time * self.speed * self.vel[1]
+        # print('snake.update() -> speed: ', self.speed, ' | vel: ', self.vel)
+        p_new = (
+            p[0] + self.speed * self.vel[0], 
+            p[1] + self.speed * self.vel[1]
         )
-        self.position = new_p
-        self.time += self.time_speed
+        self.position = p_new
 
-        if not new_p[0] // 1 == p[0] // 1 or not new_p[1] // 1 == p[1] // 1:
+        if not p_new[0] // 1 == p[0] // 1 or not p_new[1] // 1 == p[1] // 1:
             self.shift_segments(p)
         
-        if self.position[1] > 22:
+        if self.position[1] >= 23:
             self.position = (self.position[0], 0)
+        elif self.position[1] <= 0:
+            self.position = (self.position[0], 23 + self.position[1])
+        elif self.position[0] >= 13:
+            self.position = (0, self.position[1])
+        elif self.position[0] <= 0:
+            self.position = (13 + self.position[0], self.position[1])
         
 
     def shift_segments(self, pos):
         self.segments[0] = pos
-        self.segments.append(self.segments[0])
-        self.segments.pop(0)
+        self.segments.append(self.segments.pop(0))
+
+    def turn(self, direction='up'):
+        if direction == 'up':
+                self.vel = (0, 1)
+        if direction == 'down':
+                self.vel = (0, -1)
+        if direction == 'right':
+                self.vel = (1, 0)
+        if direction == 'left':
+                self.vel = (-1, 0)
+        
 
 
 

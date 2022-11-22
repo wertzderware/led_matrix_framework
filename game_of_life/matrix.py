@@ -90,7 +90,7 @@ class Matrix():
         for x in range(self.width):
             for y in range(self.height):
                 print('(X/Y) -> (', x, '/', y, ') -> ', self.pixel_indeces[x][y])
-                self.pixels.setPixelColor(self.pixel_indeces[x][y], Color(255, 255, 255))
+                self.pixels.setPixelColor(self.pixel_indeces[x][y], (255, 255, 255))
                 self.pixels.show()
                 sleep(0.1)
 
@@ -127,6 +127,6 @@ class Matrix():
         self.draw_line(p2, (p2[0], p1[1]), color)
 
     def random_point(self):
-        return (random.randint(0, self.width), random.randint(0, self.height))
+        return (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
 
 
