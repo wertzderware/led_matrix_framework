@@ -90,7 +90,7 @@ class Matrix():
         for x in range(self.width):
             for y in range(self.height):
                 print('(X/Y) -> (', x, '/', y, ') -> ', self.pixel_indeces[x][y])
-                self.pixels.setPixelColor(self.pixel_indeces[x][y], (255, 255, 255))
+                self.pixels.setPixelColor(self.pixel_indeces[x][y], Color(255, 255, 255))
                 self.pixels.show()
                 sleep(0.1)
 

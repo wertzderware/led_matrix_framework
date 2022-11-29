@@ -1,7 +1,7 @@
 import matrix
 from rpi_ws281x import Color
 
-matrix = matrix.Matrix(13, 23, 20)
+matrix = matrix.Matrix(13, 23, 100)
 # matrix.test_colors()
 
 
@@ -30,7 +30,7 @@ heart_2 = [
 ]
 
 # matrix.test()
-matrix.test_colors()
+# matrix.test_colors()
 
 # matrix.draw_shape(heart_2, (1, 10), Color(255, 0, 0), True)
 # matrix.draw_shape(heart, (1, 10), Color(255, 255, 255))

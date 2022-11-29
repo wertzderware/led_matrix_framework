@@ -1,72 +1,64 @@
-import matrix
 from rpi_ws281x import Color
+from game_object import Game_object
 
-class Snake():
+class Snake(Game_object):
+
     def __init__(self, time):
-        self.position = (7, 7)
-        self.color = (Color(255, 255, 0))
+        super().__init__(time=time, pos=(7, 7), vel=(0, 1), speed=0.5)
+        self.color = (Color(50, 255, 50))
         self.segments = [(7, 6), (7, 5)]
-        self.speed = 0.3
-        self.vel = (0, 1)
-        self.time = time
-
-    def add_matrix(self, matrix):
-        self.matrix = matrix
-
-
-
+        self.extend_elements = 0
 
     def update(self):
-        p = self.position
+
+        p = self.pos
         # print('snake.update() -> speed: ', self.speed, ' | vel: ', self.vel)
         p_new = (
             p[0] + self.speed * self.vel[0], 
             p[1] + self.speed * self.vel[1]
         )
-        self.position = p_new
 
         if not p_new[0] // 1 == p[0] // 1 or not p_new[1] // 1 == p[1] // 1:
-            self.shift_segments(p)
+            if self.extend_elements:
+                self.segments.append(self.round_position())
+                self.extend_elements -= 1
+            else:
+                self.shift_segments(p)
         
-        if self.position[1] >= 23:
-            self.position = (self.position[0], 0)
-        elif self.position[1] <= 0:
-            self.position = (self.position[0], 23 + self.position[1])
-        elif self.position[0] >= 13:
-            self.position = (0, self.position[1])
-        elif self.position[0] <= 0:
-            self.position = (13 + self.position[0], self.position[1])
+        self.pos = p_new
+        
+        # overflow after breaching border
+        x = self.matrix.width
+        y = self.matrix.height
+        if self.pos[1] >= y:
+            self.pos = (self.pos[0], 0)
+        elif self.pos[1] <= 0:
+            self.pos = (self.pos[0], y - 1 + self.pos[1])
+        elif self.pos[0] >= x:
+            self.pos = (0, self.pos[1])
+        elif self.pos[0] <= 0:
+            self.pos = (x - 1 + self.pos[0], self.pos[1])
         
 
     def shift_segments(self, pos):
         self.segments[0] = pos
         self.segments.append(self.segments.pop(0))
 
+    def extend(self, amount=1):
+        self.extend_elements = amount
+
     def turn(self, direction='up'):
-        if direction == 'up':
+        # print('turn: ', direction, ' | ', self.pos, ' | ', self.round_position())
+        if direction == 'up' and not self.vel == (0, -1):
                 self.vel = (0, 1)
-        if direction == 'down':
+        elif direction == 'down' and not self.vel == (0, 1):
                 self.vel = (0, -1)
-        if direction == 'right':
+        elif direction == 'right' and not self.vel == (-1, 0):
                 self.vel = (1, 0)
-        if direction == 'left':
+        elif direction == 'left' and not self.vel == (1, 0):
                 self.vel = (-1, 0)
-        
-
-
-
-
-    def round_position(self, is_segments=False):
-        if is_segments:
-            segments = []
-            for segment in self.segments:
-                segments.append((int(segment[0] // 1), int(segment[1] // 1)))#
-            return segments
-        else:
-            return (int(self.position[0] // 1), int(self.position[1] // 1))
 
     def draw(self):
-        self.matrix.draw_pixel(self.round_position(), Color(255, 0, 255))
+        self.matrix.draw_pixel(self.round_position(), self.color)
         for s in self.round_position(True):
-            self.matrix.draw_pixel(s, self.color)
-        # extra matrixmethode, die nur einen pixel updatet und den rest nochmal sich selber setzt
+            self.matrix.draw_pixel(s, Color(0, 255, 0))

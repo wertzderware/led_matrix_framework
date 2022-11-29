@@ -1,4 +1,8 @@
-import matrix
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+from matrix import Matrix
 
 
 # test if brightness can be set per pixel
@@ -7,10 +11,10 @@ import matrix
 
 class Canvas():
     def __init__(self, width=13, height=23):
-        self.matrix = matrix.Matrix(width, height)
+        self.matrix = Matrix(width, height)
         self.objects = []
 
-    def update(self):
+    def draw(self):
         self.matrix.clear()
         for o in self.objects:
             o.draw()

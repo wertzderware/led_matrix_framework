@@ -2,30 +2,8 @@ import random
 from time import sleep
 from rpi_ws281x import PixelStrip, Color
 
-colors = [ 
-    Color(255, 0, 0), # red
-    Color(255, 10, 0), 
-    Color(255, 25, 0), 
-    Color(255, 165, 0), 
-    Color(255, 195, 0),
-    Color(255, 225, 0),
-    Color(255, 255, 0),
-    Color(170, 213, 0),
-    Color(50, 200, 0),
-    Color(0, 170, 0), # green
-    Color(0, 85, 85),
-    Color(0, 43, 170),
-    Color(0, 0, 255), # blue
-    Color(25, 0, 213),
-    Color(50, 0, 172),
-    Color(75, 0, 130),
-    Color(129, 43, 166),
-    Color(184, 87, 202),
-    Color(255, 20, 20)
-]
-
 class Matrix():
-    def __init__(self, width, height, brightness=100):
+    def __init__(self, width, height, brightness=255):
         self.width = width
         self.height = height
         self.amount_pixels = width * height
@@ -74,18 +52,6 @@ class Matrix():
                 if v == '1':
                     self.draw_pixel(((position[0] + j) % self.width, (position[1] + i) % self.height), color)
 
-    def test_colors(self):
-        self.draw_rectangle((0, 0), (self.width - 1, self.height - 1), Color(255, 255, 255))
-        self.draw_rectangle((1, 1), (self.width - 2, self.height - 2), Color(255, 255, 255))
-        shift = 0
-        while True:
-            for i in range(len(colors)):
-                y = (i + shift) % len(colors) + 2
-                self.draw_line((2, y), (self.width - 3, y), colors[i % len(colors)])
-            self.pixels.show()
-            shift += 1
-            sleep(0.001)
-
     def test(self):
         for x in range(self.width):
             for y in range(self.height):
@@ -127,6 +93,6 @@ class Matrix():
         self.draw_line(p2, (p2[0], p1[1]), color)
 
     def random_point(self):
-        return (random.randint(0, self.width), random.randint(0, self.height))
-
-
+        p = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
+        print(p)
+        return p
