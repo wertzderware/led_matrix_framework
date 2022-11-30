@@ -7,14 +7,14 @@ class Food(Game_object):
         super().__init__(pos=(-1, -1), time=time)
 
     def draw(self):
-        self.matrix.draw_pixel(self.round_position(), Color(0, 0, int((self.time() * 10000 % 255 / 2))))
+        self.canvas.matrix.draw_pixel(self.round_position(), Color(0, 0, int((self.time() * 10000 % 255 / 2))))
 
 
-    def add_matrix(self, matrix):
-        super().add_matrix(matrix)
+    def add_canvas(self, matrix):
+        super().add_canvas(matrix)
         self.pos = (7, 9)
         # self.spawn_new()
 
     def spawn_new(self):
-        self.pos = self.matrix.random_point()
+        self.pos = self.canvas.random_point()
         

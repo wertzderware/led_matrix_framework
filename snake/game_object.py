@@ -20,8 +20,8 @@ class Game_object():
         else:
             return (int(self.pos[0] // 1), int(self.pos[1] // 1))
 
-    def add_matrix(self, matrix):
-        self.matrix = matrix
+    def add_canvas(self, canvas):
+        self.canvas = canvas
 
     def intersect(self, obj):
         return self.round_position() == obj.round_position()

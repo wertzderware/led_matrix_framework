@@ -28,8 +28,8 @@ class Snake(Game_object):
         self.pos = p_new
         
         # overflow after breaching border
-        x = self.matrix.width
-        y = self.matrix.height
+        x = self.canvas.width
+        y = self.canvas.height
         if self.pos[1] >= y:
             self.pos = (self.pos[0], 0)
         elif self.pos[1] <= 0:
@@ -59,6 +59,6 @@ class Snake(Game_object):
                 self.vel = (-1, 0)
 
     def draw(self):
-        self.matrix.draw_pixel(self.round_position(), self.color)
+        self.canvas.matrix.draw_pixel(self.round_position(), self.color)
         for s in self.round_position(True):
-            self.matrix.draw_pixel(s, Color(0, 255, 0))
+            self.canvas.matrix.draw_pixel(s, Color(0, 255, 0))

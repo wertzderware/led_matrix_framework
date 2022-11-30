@@ -1,9 +1,10 @@
 import random
 from time import sleep
 from rpi_ws281x import PixelStrip, Color
+from letters import letters
 
 class Matrix():
-    def __init__(self, width, height, brightness=255):
+    def __init__(self, width, height, brightness=100):
         self.width = width
         self.height = height
         self.amount_pixels = width * height
@@ -93,6 +94,8 @@ class Matrix():
         self.draw_line(p2, (p2[0], p1[1]), color)
 
     def random_point(self):
-        p = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
-        print(p)
-        return p
+        return (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
+
+    def text(self, text, pos, color=Color(255, 255, 255)):
+        for i, l in enumerate(text):
+            self.draw_shape(letters[l], (pos[0] + 4 * i, pos[1]), color)
