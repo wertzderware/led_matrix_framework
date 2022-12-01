@@ -24,6 +24,9 @@ class Canvas():
             o.draw()
         self.matrix.pixels.show()
 
+    def set_info(self, info):
+        self.info = info
+
     def ad_object(self, obj):
         self.objects.append(obj)
         obj.add_canvas(self)
